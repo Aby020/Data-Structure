@@ -63,9 +63,10 @@ void display() {
     struct Node* temp = front;
     printf("Queue elements are:\n");
     while (temp != NULL) {
-        printf("%d\n", temp->data);
+        printf("%d->", temp->data);
         temp = temp->next;
     }
+    printf("NULL\n");
 }
 
 int main() {
