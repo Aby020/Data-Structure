@@ -6,9 +6,9 @@ int superSet[20], superSetSize = 0,
     bitA[20], bitB[20], result[20];
 
 void getSet(int arr[], int *size, char name) {
-    printf("Enter number of elements for Set %c: ", name);
+    printf("Enter number of elements for Set %c\n", name);
     scanf("%d", size);
-    printf("Enter elements of Set %c: ", name);
+    printf("Enter elements of Set %c\n", name);
     for (int i = 0; i < *size; i++) 
     {
         scanf("%d", &arr[i]);
@@ -84,17 +84,16 @@ void setOperation(char op) {
 }
 
 // Main function placed at the end
-int main() {
+void main() {
     int choice;
     do {
-        printf("\n--- Menu ---\n");
         printf("1. Enter Universal Set\n");
         printf("2. Enter Set A\n");
         printf("3. Enter Set B\n");
-        printf("4. Union (A OR B)\n");
-        printf("5. Intersection (A AND B)\n");
-        printf("6. Difference (A - B)\n");
-        printf("7. Display sets\n");
+        printf("4. Display sets\n");
+        printf("5. Union (A OR B)\n");
+        printf("6. Intersection (A AND B)\n");
+        printf("7. Difference (A - B)\n");
         printf("8. Exit\n");
         printf("Choose: ");
         scanf("%d", &choice);
@@ -103,16 +102,17 @@ int main() {
             case 1: getSet(superSet, &superSetSize, 'U'); break;
             case 2: getSet(setA, &setASize, 'A'); break;
             case 3: getSet(setB, &setBSize, 'B'); break;
-            case 4: setOperation('|'); break; // Union (OR)
-            case 5: setOperation('&'); break; // Intersection (AND)
-            case 6: setOperation('-'); break; // Difference (A - B)
-            case 7:printSet(superSet, superSetSize, "Universal Set");
-                printSet(setA, setASize, "Set A");
-                printSet(setB, setBSize, "Set B");
-                break;
+            case 4:printSet(superSet, superSetSize, "Universal Set");
+                   printSet(setA, setASize, "Set A");
+                   printSet(setB, setBSize, "Set B");
+                   break;
+            case 5: setOperation('|'); break; // Union (OR)
+            case 6: setOperation('&'); break; // Intersection (AND)
+            case 7: setOperation('-'); break; // Difference (A - B)
+           
 
         }
-    } while (choice != 8);
+    } 
+    while (choice != 8);
 
-    return 0;
 }
