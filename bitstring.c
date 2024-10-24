@@ -1,23 +1,16 @@
-#include<stdio.h>
+# include<stdio.h>
 
 int superSet[20], superSetSize = 0,
     setA[20], setASize = 0,
     setB[20], setBSize = 0,
     bitA[20], bitB[20], result[20];
 
-// Function declarations
-void getSet(int arr[], int *size, char name);
-void printSet(int arr[], int size, char *name);
-void generateBitStrings();
-void setOperation(char op);
-void printBitString(int arr[], char *name);
-
-// Function to get input from the user
 void getSet(int arr[], int *size, char name) {
     printf("Enter number of elements for Set %c: ", name);
     scanf("%d", size);
     printf("Enter elements of Set %c: ", name);
-    for (int i = 0; i < *size; i++) {
+    for (int i = 0; i < *size; i++) 
+    {
         scanf("%d", &arr[i]);
     }
 }
@@ -101,7 +94,8 @@ int main() {
         printf("4. Union (A OR B)\n");
         printf("5. Intersection (A AND B)\n");
         printf("6. Difference (A - B)\n");
-        printf("7. Exit\n");
+        printf("7. Display sets\n");
+        printf("8. Exit\n");
         printf("Choose: ");
         scanf("%d", &choice);
 
@@ -112,8 +106,13 @@ int main() {
             case 4: setOperation('|'); break; // Union (OR)
             case 5: setOperation('&'); break; // Intersection (AND)
             case 6: setOperation('-'); break; // Difference (A - B)
+            case 7:printSet(superSet, superSetSize, "Universal Set");
+                printSet(setA, setASize, "Set A");
+                printSet(setB, setBSize, "Set B");
+                break;
+
         }
-    } while (choice != 7);
+    } while (choice != 8);
 
     return 0;
 }
