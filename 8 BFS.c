@@ -1,127 +1,82 @@
-#include<stdio.h>
+#include <stdio.h>
 
 #define MAX_SIZE 100
 
-	int n,graph[MAX_SIZE][MAX_SIZE],visited[MAX_SIZE],nodevalues[MAX_SIZE];
-	int front = -1, rear = -1,queue[MAX_SIZE];
+int n, graph[MAX_SIZE][MAX_SIZE], visited[MAX_SIZE], nodeValues[MAX_SIZE];
+int front = -1, rear = -1, queue[MAX_SIZE];
 
-void enqueue(int data)
-{
-	if(rear == n - 1)
-	{
-		printf("Queue is full");
-	} 
-	else if(front == -1 && rear == -1)
-	{
-		front = 0;
-		rear = 0;
-		queue[rear] = data;
-	} 
-	else 
-	{
-		rear++;
-		queue[rear] = data;
-	}
+void enqueue(int data) {
+    if (rear == n - 1) {
+        printf("Queue is full\n");
+    } else {
+        if (front == -1) front = 0;
+        queue[++rear] = data;
+    }
 }
 
-void dequeue()
-	{
-	if(front == -1 && rear == -1)
-	{
-		printf("Queue is empty \n");
-	} 
-	else if(front == rear)
-	{
-
-		front = -1;
-		rear = -1;
-	} 
-	else 
-	{
-		front++;
-	}
+void dequeue() {
+    if (front == -1) {
+        printf("Queue is empty\n");
+    } else {
+        if (front == rear) front = rear = -1;
+        else front++;
+    }
 }
 
-int bfs(int startIndex)
-{
-	visited[startIndex] = 1;
-	enqueue(startIndex);
-
-	printf("The visited node is \t");
-	while(front != -1)
-	{
-		int node = queue[front];
-		dequeue();
-		printf("%d \t",nodevalues[node]);
-		for(int i = 0; i < n; i++)
-		{
-			if(graph[node][i] == 1 && visited[i] == 0)
-			{
-				visited[i] = 1;
-				enqueue(i);
-			}	
-		}
-	}
-return 0;
+void bfs(int startNode) {
+    visited[startNode] = 1;
+    enqueue(startNode);
+    printf("Visited nodes: ");
+    while (front != -1) {
+        int currentNode = queue[front];
+        dequeue();
+        printf("%d ", nodeValues[currentNode]);
+        for (int i = 0; i < n; i++) {
+            if (graph[currentNode][i] == 1 && visited[i] == 0) {
+                visited[i] = 1;
+                enqueue(i);
+            }
+        }
+    }
+    printf("\n");
 }
 
-void main()
-{
+int main() {
+    printf("Enter the number of nodes: ");
+    scanf("%d", &n);
 
-	printf("Enter the number of nodes : \n");
-	scanf("%d",&n);
+    printf("Enter values of each node:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Node %d: ", i + 1);
+        scanf("%d", &nodeValues[i]);
+        visited[i] = 0; // Initialize visited array
+    }
 
-	printf("\nEnter the values of each node : \n");
-	for(int i= 0; i < n; i++)
-	{
-		printf("Node %d : ", i + 1);
-		scanf("%d",&nodevalues[i]);
-	}
+    printf("Enter adjacency matrix (0 or 1) for edges:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("Edge between node %d and node %d (1/0): ", nodeValues[i], nodeValues[j]);
+            scanf("%d", &graph[i][j]);
+        }
+    }
 
-	for(int i = 0; i < n; i++)
-	{
-		visited[i] = 0;
-	}
+    int startValue;
+    printf("Enter starting node value: ");
+    scanf("%d", &startValue);
 
-	printf("Enter 0 or 1 if there is an edge between the vertices \n");
-	for(int i = 0; i < n; i++)
-	{
-		for(int j = i + 1;j < n; j++)
-		{
-			printf("is there an edge between node %d and node %d enter 1 else enter 0 :", nodevalues[i],nodevalues[j]);
-			int edge;
-			scanf("%d",&edge);
+    int startIndex = -1;
+    for (int i = 0; i < n; i++) {
+        if (nodeValues[i] == startValue) {
+            startIndex = i;
+            break;
+        }
+    }
 
-			if(edge == 1)
-			{
-				graph[i][j] = graph[j][i] = 1;
-			} 
-			else 
-			{
-				graph[i][j] = graph[j][i] = 0;
-			}
-		}
-	}
+    if (startIndex == -1) {
+        printf("Invalid starting node value\n");
+    } else {
+        bfs(startIndex);
+    }
 
-int startNode;
-printf("Enter the value of starting node : ");
-scanf("%d",&startNode);
-
-int startIndex = -1;
-
-for(int i = 0; i < n; i++)
-{
-	if(startNode == nodevalues[i])
-	{
-		startIndex = i;
-		break;
-	}
-}
-
-if(startIndex == -1)
-{
-	printf("invalid values you entered \n");
-}
-
-	bfs(startIndex);
+    return 0;
 }
